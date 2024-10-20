@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>タイマー画面</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>集中しよう!</h1>
+        <div id="task-info">
+            <p>選択したタグ: <span id="tag-name"></span></p>
+            <p>残り時間: <span id="remaining-time"></span></p>
+        </div>
+        <div id="timer-display"></div>
+    </div>
+
+    <script>
+        // URLのクエリパラメータから値を取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedTag = urlParams.get('tag');
+        const selectedTime = urlParams.get('time');
+
+        // タグと時間を画面に表示
+        document.getElementById('tag-name').innerText = selectedTag;
+        //document.getElementById('remaining-time').innerText = selectedTime + " 分";
+
+        // 残り時間を秒に変換
+        let remainingSeconds = selectedTime * 60;
+
+        // タイマーのカウントダウン
+        function updateTimer() {
+            const minutes = Math.floor(remainingSeconds / 60);
+            const seconds = remainingSeconds % 60;
+            document.getElementById('remaining-time').innerText = `${minutes}分 ${seconds}秒`;
+
+            if (remainingSeconds > 0) {
+                remainingSeconds--;
+            } else {
+                document.getElementById('remaining-time').innerText = `0分 0秒`;
+                clearInterval(timerInterval); // タイマーを停止
+                alert('時間が終了しました！');
+                // index.htmlに遷移
+                window.location.href = 'index.html';
+            }
+        }
+
+        // 1秒ごとにタイマーを更新
+        const timerInterval = setInterval(updateTimer, 1000);
+    </script>
+</body>
+
+</html>

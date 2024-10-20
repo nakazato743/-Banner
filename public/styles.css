@@ -1,0 +1,67 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffe0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 300px;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #ffffcc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.banner {
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.image-container img {
+    width: 100%;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+
+.dropdowns {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    font-weight: bold;
+}
+
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.start-button button {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    width: 100%;
+}
+
+#task-info {
+    margin-bottom: 20px;
+}
+
+#remaining-time {
+    font-size: 24px;
+    font-weight: bold;
+}
