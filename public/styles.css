@@ -10,7 +10,10 @@ body {
 }
 
 .container {
-    width: 300px;
+    max-width: 100%;
+    /* 親要素の幅に合わせる */
+    aspect-ratio: 9 / 16;
+    /* アスペクト比を16:9に設定 */
     padding: 10px;
     border-radius: 20px;
     background-color: #ffffcc;
@@ -19,10 +22,8 @@ body {
 }
 
 .banner {
-    padding: 15px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 5px;
 }
 
 .image-container img {
@@ -31,6 +32,22 @@ body {
     margin-bottom: 15px;
 }
 
+#dodai-image {
+    max-width: 100%;
+    width: 100px;
+    /* 横幅を300pxに指定 */
+    height: auto;
+    /* 高さは自動調整（アスペクト比を保つ） */
+}
+
+#time-input {
+    width: 80px;
+    /* 幅を80pxに設定 */
+    margin-right: 16px;
+    /* ボタンとの間の余白を保つために追加 */
+}
+
+
 .dropdowns {
     margin-bottom: 15px;
     display: flex;
@@ -38,16 +55,25 @@ body {
     gap: 10px;
 }
 
-label {
-    font-weight: bold;
+.flex-container {
+    display: flex;
+    align-items: center;
+    /* 垂直方向の中央揃え */
+    margin-bottom: 16px;
+    /* 下部の余白 */
 }
 
-select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
+.flex-container label {
+    margin-right: 8px;
+    /* ラベルとセレクトボックスの間の余白 */
 }
+
+.flex-container select,
+.flex-container input {
+    margin-right: 16px;
+    /* ボタンとの間の余白 */
+}
+
 
 .start-button button {
     padding: 10px 20px;

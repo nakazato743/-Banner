@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>タイマー画面</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -26,7 +26,7 @@
 
         // タグと時間を画面に表示
         document.getElementById('tag-name').innerText = selectedTag;
-        //document.getElementById('remaining-time').innerText = selectedTime + " 分";
+        document.getElementById('remaining-time').innerText = selectedTime + " 分";
 
         // 残り時間を秒に変換
         let remainingSeconds = selectedTime * 60;
@@ -40,8 +40,8 @@
             if (remainingSeconds > 0) {
                 remainingSeconds--;
             } else {
-                document.getElementById('remaining-time').innerText = `0分 0秒`;
                 clearInterval(timerInterval); // タイマーを停止
+                document.getElementById('remaining-time').innerText = `0分 0秒`;
                 alert('時間が終了しました！');
                 // index.htmlに遷移
                 window.location.href = 'index.html';
