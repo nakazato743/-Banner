@@ -9,39 +9,103 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="banner">スマホ「Banner」</div>
-        <div class="image-container">
-            <img src="dodai.png" alt="花壇" id="dodai-image">
-        </div>
-        <div class="dropdowns">
-            <div class="flex-container">
-                <!-- タグ選択 -->
-                <label for="tag-select">タグを選択:</label>
+    <div class="banner">タスクトラッカー</div>
+    <div class="image-container">
+        <img src="dodai.png" alt="花壇" id="dodai-image">
+    </div>
+    <div class="dropdowns">
+        <div class="flex-container">
+            <label for="tag-select">タグを選択:</label>
+            <div class="tag-select-wrapper">
                 <select id="tag-select">
                     <option value="A">A</option>
                     <option value="B">B</option>
                     <option value="C">C</option>
                     <option value="D">D</option>
+                    <option value="custom">タグを追加</option>
                 </select>
-
-                <!-- 時間設定 -->
-                <label for="time-input">時間を設定 (分):</label>
-                <input type="number" id="time-input" min="10" step="5" value="10">
+                <button id="delete-tag-btn">削除</button>
             </div>
+
+            <input type="text" id="custom-tag" placeholder="新しいタグを入力">
+            <button id="add-tag-btn">追加</button>
+
+            <label for="time-input">時間を設定 (分):</label>
+            <input type="number" id="time-input" min="10" step="5" value="10">
         </div>
-        <div class="start-button">
-            <button id="start-btn">開始</button>
-        </div>
+    </div>
+    <div class="start-button">
+        <button id="start-btn">開始</button>
     </div>
 
     <script>
+        // JavaScriptの処理はそのまま
+        const tagSelect = document.getElementById('tag-select');
+        const customTagInput = document.getElementById('custom-tag');
+        const addTagBtn = document.getElementById('add-tag-btn');
+        const deleteTagBtn = document.getElementById('delete-tag-btn');
+
+        // タグ選択時の処理
+        tagSelect.addEventListener('change', function () {
+            if (tagSelect.value === 'custom') {
+                customTagInput.style.display = 'inline';
+                addTagBtn.style.display = 'inline';
+                deleteTagBtn.style.display = 'none';
+                customTagInput.focus();
+            } else {
+                customTagInput.style.display = 'none';
+                addTagBtn.style.display = 'none';
+                deleteTagBtn.style.display = tagSelect.selectedOptions[0].classList.contains('custom-added') ? 'inline' : 'none';
+            }
+        });
+
+        // 追加ボタンの処理
+        addTagBtn.addEventListener('click', function () {
+            const newTag = customTagInput.value.trim();
+            if (newTag) {
+                // 重複チェック
+                const existingOptions = Array.from(tagSelect.options).map(option => option.value);
+                if (existingOptions.includes(newTag)) {
+                    alert("このタグはすでに存在します。");
+                    return;
+                }
+                const newOption = document.createElement("option");
+                newOption.value = newTag;
+                newOption.text = newTag;
+                newOption.classList.add('custom-added');
+                tagSelect.insertBefore(newOption, tagSelect.options[tagSelect.options.length - 1]);
+                tagSelect.value = newTag;
+                customTagInput.value = '';
+                customTagInput.style.display = 'none';
+                addTagBtn.style.display = 'none';
+                deleteTagBtn.style.display = 'inline';
+            } else {
+                alert("タグ名を入力してください。");
+            }
+        });
+
+        // 削除ボタンの処理
+        deleteTagBtn.addEventListener('click', function () {
+            const selectedOption = tagSelect.selectedOptions[0];
+            if (selectedOption.classList.contains('custom-added')) {
+                selectedOption.remove();
+                deleteTagBtn.style.display = 'none';
+                tagSelect.value = "A";  // デフォルトタグを選択
+            } else {
+                alert("削除できるタグを選択してください。");
+            }
+        });
+
         // 開始ボタンの処理
         document.getElementById('start-btn').addEventListener('click', function () {
-            const selectedTag = document.getElementById('tag-select').value;
+            if (tagSelect.value === 'custom') {
+                alert("タグを追加してから開始してください。");
+                return;
+            }
+
+            const selectedTag = tagSelect.value;
             const selectedTime = document.getElementById('time-input').value;
 
-            // URLにタグと時間のパラメータを渡して画面遷移
             window.location.href = `timer.html?tag=${selectedTag}&time=${selectedTime}`;
         });
     </script>

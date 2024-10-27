@@ -4,26 +4,18 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    /* 縦に配置 */
     align-items: center;
+    /* 中央揃え */
     height: 100vh;
 }
 
-.container {
-    max-width: 100%;
-    /* 親要素の幅に合わせる */
-    aspect-ratio: 9 / 16;
-    /* アスペクト比を16:9に設定 */
-    padding: 10px;
-    border-radius: 20px;
-    background-color: #ffffcc;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
 .banner {
-    padding: 10px;
-    margin-bottom: 5px;
+    font-size: 24px;
+    /* タイトルサイズ */
+    margin-bottom: 10px;
+    /* 下マージン */
 }
 
 .image-container img {
@@ -35,18 +27,13 @@ body {
 #dodai-image {
     max-width: 100%;
     width: 100px;
-    /* 横幅を300pxに指定 */
     height: auto;
-    /* 高さは自動調整（アスペクト比を保つ） */
 }
 
 #time-input {
-    width: 80px;
-    /* 幅を80pxに設定 */
+    width: 50px;
     margin-right: 16px;
-    /* ボタンとの間の余白を保つために追加 */
 }
-
 
 .dropdowns {
     margin-bottom: 15px;
@@ -58,22 +45,51 @@ body {
 .flex-container {
     display: flex;
     align-items: center;
-    /* 垂直方向の中央揃え */
+    flex-wrap: wrap;
+    gap: 8px;
     margin-bottom: 16px;
-    /* 下部の余白 */
+}
+
+#tag-select {
+    width: 50px;
 }
 
 .flex-container label {
     margin-right: 8px;
-    /* ラベルとセレクトボックスの間の余白 */
 }
 
 .flex-container select,
-.flex-container input {
-    margin-right: 16px;
-    /* ボタンとの間の余白 */
+.flex-container input[type="text"],
+.flex-container input[type="number"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: auto;
 }
 
+#custom-tag {
+    display: none;
+    width: 120px;
+    margin-right: 8px;
+}
+
+#add-tag-btn {
+    display: none;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+#add-tag-btn:hover {
+    background-color: #e0e0e0;
+}
+
+#delete-tag-btn {
+    display: none;
+    /* 初期状態では非表示 */
+}
 
 .start-button button {
     padding: 10px 20px;
