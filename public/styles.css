@@ -183,3 +183,8 @@ body {
 .hamburger-menu.open span:nth-child(3) {
   transform: rotate(-45deg) translate(5px, -5px);
 }
+@media (max-width: 600px) {
+  .menu {
+    width: 50%; /* 画面いっぱいに広がる */
+  }
+}
