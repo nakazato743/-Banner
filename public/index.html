@@ -37,6 +37,19 @@
     <div class="start-button">
         <button id="start-btn">開始</button>
     </div>
+    <div class="hamburger-menu" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    
+      <!-- メニュー項目 -->
+      <nav id="menu" class="menu">
+        <ul>
+          <li><a href="#">履歴</a></li>
+          <li><a href="#">フレンド</a></li>
+        </ul>
+      </nav>
 
     <script>
         // JavaScriptの処理はそのまま
@@ -107,6 +120,26 @@
             const selectedTime = document.getElementById('time-input').value;
 
             window.location.href = `timer.html?tag=${selectedTag}&time=${selectedTime}`;
+        });
+        function toggleMenu() {
+            const hamburgerMenu = document.querySelector(".hamburger-menu");
+            const menu = document.getElementById("menu");
+  
+            // メニューの開閉を切り替える
+            hamburgerMenu.classList.toggle("open");
+            menu.classList.toggle("open");
+        }
+
+        // 領域外クリックを検出してメニューを閉じる
+        document.addEventListener("click", function(event) {
+            const menu = document.getElementById("menu");
+            const hamburgerMenu = document.querySelector(".hamburger-menu");
+
+            // メニューが開いていて、かつメニュー領域外がクリックされた場合にメニューを閉じる
+            if (menu.classList.contains("open") && !menu.contains(event.target) && !hamburgerMenu.contains(event.target)) {
+            menu.classList.remove("open");
+            hamburgerMenu.classList.remove("open");
+            }
         });
     </script>
 </body>
