@@ -6,35 +6,33 @@
     <title>履歴</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* ここに独自のスタイルを記述 */
+        /* 独自のスタイルを記述 */
         .history-item {
-            width: 90%; /* 幅を90%に設定 */
-            margin: 10px 0; /* 上下マージンを追加 */
-            padding: 10px; /* 内側の余白を追加 */
-            border: 1px solid #ccc; /* 枠線を追加 */
-            border-radius: 5px; /* 角を丸くする */
+            width: 90%;
+            margin: 10px 0;
+            padding: 0; /* パディングを削除 */
             background-color: #fff; /* 背景色を白に設定 */
         }
 
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
         .bar-container {
-            background-color: #f0f0f0; /* 棒グラフの背景色 */
-            border-radius: 5px; /* 角を丸くする */
-            height: 20px; /* 高さを設定 */
-            margin-top: 5px; /* 上マージンを追加 */
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            height: 10px;
         }
 
         .bar {
-            background-color: #4caf50; /* 棒グラフの色 */
-            height: 100%; /* 高さを100%に */
-            border-radius: 5px; /* 角を丸くする */
-        }
-
-        .time {
-            font-weight: bold; /* 時間表示を太字に */
-        }
-
-        .home-button {
-            margin-top: 20px; /* 上マージンを追加 */
+            background-color: #4caf50;
+            height: 100%;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -49,7 +47,7 @@
 
         <!-- ホームボタン -->
         <div class="home-button">
-            <button id="home-btn">ホーム</button>
+            <img id="home-btn" src="home_button.png" alt="ホーム" style="cursor: pointer; width: 50px; height: 50px;">
         </div>
     </div>
 
@@ -73,10 +71,17 @@
                 const div = document.createElement('div');
                 div.className = 'history-item';
 
-                // タグ名
-                const tagName = document.createElement('div');
-                tagName.className = 'tag-name';
+                const header = document.createElement('div');
+                header.className = 'history-header';
+
+                const tagName = document.createElement('span');
                 tagName.textContent = item.tagName;
+
+                const time = document.createElement('span');
+                time.textContent = `${item.time} 分`;
+
+                header.appendChild(tagName);
+                header.appendChild(time);
 
                 // 棒グラフ
                 const barContainer = document.createElement('div');
@@ -86,20 +91,42 @@
                 bar.style.width = `${item.time}%`; // 時間を棒の長さに変換
                 barContainer.appendChild(bar);
 
-                // 時間表示
-                const time = document.createElement('div');
-                time.className = 'time';
-                time.textContent = `${item.time} 分`;
-
                 // 各要素を親divに追加
-                div.appendChild(tagName);
+                div.appendChild(header);
                 div.appendChild(barContainer);
-                div.appendChild(time);
                 historyList.appendChild(div);
             });
         }
 
-        // 仮データを表示
+        // 履歴データをローカルストレージから取得する場合の例
+        /*
+        function fetchHistoryDataFromLocalStorage() {
+            const data = localStorage.getItem('ここにデータベース名'); // 履歴データを取得
+            if (data) {
+                return JSON.parse(data); // JSON形式でパースして返す
+            }
+            return []; // データがない場合は空の配列を返す
+        }
+
+        // ローカルストレージからデータを取得して表示
+        const localStorageHistoryData = fetchHistoryDataFromLocalStorage();
+        displayHistory(localStorageHistoryData);
+        */
+
+        // 履歴データをAPIデータベースから取得する場合の例
+        /*
+        async function fetchHistoryData() {
+            // データベースから履歴データを取得する処理
+            const response = await fetch('ここにAPIのURLを入力'); // 例：APIエンドポイントを指定
+            const data = await response.json(); // JSON形式でデータを取得
+            displayHistory(data); // 取得したデータを表示
+        }
+
+        // データベースからデータを取得して表示
+        fetchHistoryData();
+        */
+
+        // 仮データを表示・データベースまたはローカルストレージからの取得の場合は消す
         displayHistory(historyData);
 
         // ホームボタンのイベント
@@ -109,3 +136,4 @@
     </script>
 </body>
 </html>
+
