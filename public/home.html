@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>タスクトラッカー</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="banner">タスクトラッカー</div>
+    <div class="image-container">
+        <img src="dodai.png" alt="花壇" id="dodai-image">
+    </div>
+    <div class="dropdowns">
+        <div class="flex-container">
+            <label for="tag-select">タグを選択:</label>
+            <div class="tag-select-wrapper">
+                <select id="tag-select">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="custom">タグを追加</option>
+                </select>
+                <button id="delete-tag-btn">削除</button>
+            </div>
+
+            <input type="text" id="custom-tag" placeholder="新しいタグを入力">
+            <button id="add-tag-btn">追加</button>
+
+            <label for="time-input">時間を設定 (分):</label>
+            <input type="number" id="time-input" min="10" step="5" value="10">
+        </div>
+    </div>
+    <div class="start-button">
+        <button id="start-btn">開始</button>
+    </div>
+    <div class="hamburger-menu" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+
+
+    <!-- メニュー項目 -->
+    <nav id="menu" class="menu">
+        <ul>
+            <li><a href="#">履歴</a></li>
+            <li><a href="#">フレンド</a></li>
+        </ul>
+    </nav>
+
+    <script>
+        // JavaScriptの処理はそのまま
+        const tagSelect = document.getElementById('tag-select');
+        const customTagInput = document.getElementById('custom-tag');
+        const addTagBtn = document.getElementById('add-tag-btn');
+        const deleteTagBtn = document.getElementById('delete-tag-btn');
+
+        // タグ選択時の処理
+        tagSelect.addEventListener('change', function () {
+            if (tagSelect.value === 'custom') {
+                customTagInput.style.display = 'inline';
+                addTagBtn.style.display = 'inline';
+                deleteTagBtn.style.display = 'none';
+                customTagInput.focus();
+            } else {
+                customTagInput.style.display = 'none';
+                addTagBtn.style.display = 'none';
+                deleteTagBtn.style.display = tagSelect.selectedOptions[0].classList.contains('custom-added') ? 'inline' : 'none';
+            }
+        });
+
+        // 追加ボタンの処理
+        addTagBtn.addEventListener('click', function () {
+            const newTag = customTagInput.value.trim();
+            if (newTag) {
+                // 重複チェック
+                const existingOptions = Array.from(tagSelect.options).map(option => option.value);
+                if (existingOptions.includes(newTag)) {
+                    alert("このタグはすでに存在します。");
+                    return;
+                }
+                const newOption = document.createElement("option");
+                newOption.value = newTag;
+                newOption.text = newTag;
+                newOption.classList.add('custom-added');
+                tagSelect.insertBefore(newOption, tagSelect.options[tagSelect.options.length - 1]);
+                tagSelect.value = newTag;
+                customTagInput.value = '';
+                customTagInput.style.display = 'none';
+                addTagBtn.style.display = 'none';
+                deleteTagBtn.style.display = 'inline';
+            } else {
+                alert("タグ名を入力してください。");
+            }
+        });
+
+        // 削除ボタンの処理
+        deleteTagBtn.addEventListener('click', function () {
+            const selectedOption = tagSelect.selectedOptions[0];
+            if (selectedOption.classList.contains('custom-added')) {
+                selectedOption.remove();
+                deleteTagBtn.style.display = 'none';
+                tagSelect.value = "A";  // デフォルトタグを選択
+            } else {
+                alert("削除できるタグを選択してください。");
+            }
+        });
+
+        // 開始ボタンの処理
+        document.getElementById('start-btn').addEventListener('click', function () {
+            if (tagSelect.value === 'custom') {
+                alert("タグを追加してから開始してください。");
+                return;
+            }
+
+            const selectedTag = tagSelect.value;
+            const selectedTime = document.getElementById('time-input').value;
+
+            window.location.href = `timer.html?tag=${selectedTag}&time=${selectedTime}`;
+        });
+        function toggleMenu() {
+            const hamburgerMenu = document.querySelector(".hamburger-menu");
+            const menu = document.getElementById("menu");
+
+            // メニューの開閉を切り替える
+            hamburgerMenu.classList.toggle("open");
+            menu.classList.toggle("open");
+        }
+
+        // 領域外クリックを検出してメニューを閉じる
+        document.addEventListener("click", function (event) {
+            const menu = document.getElementById("menu");
+            const hamburgerMenu = document.querySelector(".hamburger-menu");
+
+            // メニューが開いていて、かつメニュー領域外がクリックされた場合にメニューを閉じる
+            if (menu.classList.contains("open") && !menu.contains(event.target) && !hamburgerMenu.contains(event.target)) {
+                menu.classList.remove("open");
+                hamburgerMenu.classList.remove("open");
+            }
+        });
+    </script>
+</body>
+
+</html>
