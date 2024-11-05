@@ -185,7 +185,7 @@ body {
 }
 @media (max-width: 600px) {
   .menu {
-    width: 50%; /* 画面いっぱいに広がる */
+    width: 50%;
     
   }
 }
