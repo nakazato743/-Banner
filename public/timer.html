@@ -6,17 +6,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>タイマー画面</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 画像とボタンの表示用スタイル */
+        .flower {
+            position: fixed; /* 画像を固定位置に表示 */
+            display: none; /* 初期状態は非表示 */
+            width: 50px; /* 花のサイズ調整 (幅を120pxに変更) */
+            height: auto; /* 高さは自動調整 */
+            bottom: 60px; /* dodai.pngの上に配置 (位置を140pxに変更) */
+            right: 40px; /* 初期位置 */
+            transition: opacity 3.0s ease; /* アニメーション効果 */
+        }
+
+        #homeButton {
+            position: absolute;
+            display: none; /* 初期状態は非表示 */
+            top: 50%;      /* ボタンの縦位置 */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #homeButton:hover {
+            background-color: #45a049;
+        }
+
+        #completionMessage {
+            display: none; /* 初期状態は非表示 */
+            text-align: center; /* 中央揃え */
+            font-size: 1.5em; /* フォントサイズ */
+            color: #333; /* 文字色 */
+            margin-bottom: 20px; /* 下の余白 */
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>集中しよう!</h1>
+        <h1 id="focus-text">集中しよう!</h1>
+        <div id="completionMessage">タスク完了!</div> <!-- タスク完了のメッセージ -->
         <div id="task-info">
             <p>選択したタグ: <span id="tag-name"></span></p>
             <p>残り時間: <span id="remaining-time"></span></p>
         </div>
         <div id="timer-display"></div>
     </div>
+
+    <!-- 花の画像リスト -->
+    <div id="flowers-container">
+        <img id="flower1" class="flower" src="hana/hana1.png" alt="花1">
+        <img id="flower2" class="flower" src="hana/hana2.png" alt="花2">
+        <img id="flower3" class="flower" src="hana/hana3.png" alt="花3">
+        <img id="flower4" class="flower" src="hana/hana4.png" alt="花4">
+        <img id="flower5" class="flower" src="hana/kareta.png" alt="花5">
+    </div>
+
+    <!-- タイマー終了後に表示する画像 -->
+    <img id="finishedImage" src="hana/dodai.png" alt="終了時の画像">
+    <button id="homeButton" onclick="goHome()">ホームに戻る</button>
 
     <script>
         // URLのクエリパラメータから値を取得
@@ -30,6 +83,15 @@
 
         // 残り時間を秒に変換
         let remainingSeconds = selectedTime * 60;
+        let elapsedSeconds = 0; // 経過時間を追跡する変数
+
+        // 花の画像のインデックス
+        let currentFlowerIndex = 0;
+        const flowers = document.querySelectorAll('.flower');
+
+        // 各花の右側の位置を設定
+        const flowerOffset = 20; // 花の初期位置からのずらし値
+        let currentRightPosition = 20; // 初期位置
 
         // タイマーのカウントダウン
         function updateTimer() {
@@ -37,15 +99,47 @@
             const seconds = remainingSeconds % 60;
             document.getElementById('remaining-time').innerText = `${minutes}分 ${seconds}秒`;
 
+            // 経過時間を1秒ずつ増やす
+            elapsedSeconds++;
+
+            // 10秒経過したときに花の画像を表示
+            if (elapsedSeconds % 10 === 0) {
+                if (currentFlowerIndex < flowers.length) {
+                    flowers[currentFlowerIndex].style.display = 'block';
+                    flowers[currentFlowerIndex].style.opacity = '1'; // 透明度を設定して表示
+                    flowers[currentFlowerIndex].style.right = `${currentRightPosition}px`; // 右位置を更新
+                    currentRightPosition += flowerOffset; // 次の花の位置をずらす
+                    currentFlowerIndex++;
+                }
+            }
+
             if (remainingSeconds > 0) {
                 remainingSeconds--;
             } else {
                 clearInterval(timerInterval); // タイマーを停止
-                document.getElementById('remaining-time').innerText = `0分 0秒`;
+                document.getElementById('remaining-time').innerText = "0分 0秒";
                 alert('時間が終了しました！');
-                // index.htmlに遷移
-                window.location.href = 'index.html';
+                showImageAndButton(); // 画像とボタンを表示
+                hideText(); // 文字列とタイマー表示を非表示
             }
+        }
+
+        // 画像とボタンを表示する関数
+        function showImageAndButton() {
+            document.getElementById('finishedImage').classList.add('centered'); // 画像を中央に移動
+            document.getElementById('homeButton').style.display = 'block'; // ボタンを表示
+            document.getElementById('completionMessage').style.display = 'block'; // タスク完了のメッセージを表示
+        }
+
+        // 文字列と残り時間を非表示にする関数
+        function hideText() {
+            document.getElementById('focus-text').style.display = 'none'; // 「集中しよう!」を非表示
+            document.getElementById('task-info').style.display = 'none'; // 残り時間表示を非表示
+        }
+
+        // ホームに戻る関数
+        function goHome() {
+            window.location.href = 'index.html';
         }
 
         // 1秒ごとにタイマーを更新
