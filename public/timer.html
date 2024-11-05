@@ -7,17 +7,6 @@
     <title>タイマー画面</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* 画像とボタンの表示用スタイル */
-        .flower {
-            position: fixed; /* 画像を固定位置に表示 */
-            display: none; /* 初期状態は非表示 */
-            width: 50px; /* 花のサイズ調整 (幅を120pxに変更) */
-            height: auto; /* 高さは自動調整 */
-            bottom: 60px; /* dodai.pngの上に配置 (位置を140pxに変更) */
-            right: 40px; /* 初期位置 */
-            transition: opacity 3.0s ease; /* アニメーション効果 */
-        }
-
         #homeButton {
             position: absolute;
             display: none; /* 初期状態は非表示 */
@@ -44,6 +33,27 @@
             color: #333; /* 文字色 */
             margin-bottom: 20px; /* 下の余白 */
         }
+        /* 花の画像のサイズと位置 */
+        .flower {
+            display: none; /* 初期状態は非表示 */
+            width: 20%; /* 花のサイズを画面幅の15%に調整 */
+            height: auto; /* 高さは自動調整 */
+            position: fixed;
+            bottom: 175px; /* 位置を低めに変更 */
+            right: 40px;
+            transition: opacity 30.0s ease; /* アニメーション効果 */
+        }
+
+        /* タイマーが動いている間に表示するdodai.pngの設定 */
+        #finishedImage {
+            position: fixed; /* 画面下に固定 */
+            bottom: 0; /* 画面の下部に配置 */
+            left: 50%; /* 横位置を中央に揃える */
+            transform: translateX(-50%); /* 中央揃えのための調整 */
+            max-width: 100%; /* 幅を画面幅いっぱいに調整 */
+            height: auto;
+            z-index: -1; /* 背景扱いとして下の方に配置 */
+        }
     </style>
 </head>
 
@@ -68,7 +78,7 @@
     </div>
 
     <!-- タイマー終了後に表示する画像 -->
-    <img id="finishedImage" src="hana/dodai.png" alt="終了時の画像">
+    <img src="dodai.png" alt="終了時の画像" id="finishedImage" >
     <button id="homeButton" onclick="goHome()">ホームに戻る</button>
 
     <script>
@@ -90,7 +100,7 @@
         const flowers = document.querySelectorAll('.flower');
 
         // 各花の右側の位置を設定
-        const flowerOffset = 20; // 花の初期位置からのずらし値
+        const flowerOffset = 60; // 花の初期位置からのずらし値
         let currentRightPosition = 20; // 初期位置
 
         // タイマーのカウントダウン
@@ -139,7 +149,7 @@
 
         // ホームに戻る関数
         function goHome() {
-            window.location.href = 'index.html';
+            window.location.href = 'home.html';
         }
 
         // 1秒ごとにタイマーを更新
