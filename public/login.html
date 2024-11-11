@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banner</title>
+    <link rel="stylesheet" href="styles.css"> <!-- styles.css をリンク -->
+</head>
+
+<body>
+    <header>
+        <h1>Banner</h1>
+    </header>
+
+    <form action="/login" method="POST">
+        <label for="username">ユーザー名:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">パスワード:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">ログイン</button>
+
+        <p>まだアカウントをお持ちでないですか？ <a href="/register">ユーザー登録</a></p>
+    </form>
+</body>
+
+</html>
