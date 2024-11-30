@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ユーザー登録</title>
+    <link rel="stylesheet" href="styles.css"> <!-- styles.css をリンク -->
+</head>
+
+<body>
+    <header>
+        <h1>ユーザー登録</h1>
+    </header>
+
+    <form action="/register" method="POST">
+        <label for="username">ユーザー名:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">パスワード:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">登録</button>
+
+        <p>既にアカウントをお持ちですか？ <a href="/">ログイン</a></p>
+    </form>
+</body>
+
+</html>

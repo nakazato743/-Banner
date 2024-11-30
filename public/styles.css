@@ -1,190 +1,328 @@
+/* 全体の背景色 */
 body {
+  background-color: #FFFFE0;
+  /* ベースカラー: ライトイエロー */
   font-family: Arial, sans-serif;
-  background-color: #ffffe0;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  /* 縦に配置 */
-  align-items: center;
-  /* 中央揃え */
-  height: 100vh;
+  color: #333;
+  /* テキストカラー */
 }
 
-.banner {
-  font-size: 18px;
-  /* タイトルサイズ */
-  margin-bottom: 10px;
-  /* 下マージン */
+/* ヘッダーのスタイル */
+header {
+  background-color: #FFD700;
+  /* ゴールド */
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 24px;
 }
 
-.image-container img {
+/* ログインフォームのスタイル */
+form {
+  background-color: white;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 入力フィールドのスタイル */
+input[type="text"],
+input[type="password"] {
   width: 100%;
-  border: 1px solid #ccc;
-  margin-bottom: 15px;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
 }
 
-#dodai-image {
-  max-width: 100%;
-  width: 100px;
-  height: auto;
+/* ボタンのスタイル */
+button {
+  background-color: #FFDD57;
+  /* 緑 */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
 }
 
-#time-input {
-  width: 50px;
-  margin-right: 16px;
+button:hover {
+  background-color: #FFDD57;
+  /* ホバー時の色 */
 }
 
-.dropdowns {
-  margin-bottom: 15px;
+/* エラーメッセージのスタイル */
+.error-message {
+  color: red;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* リンクのスタイル */
+a {
+  text-decoration: none;
+  color: #4CAF50;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+/* アプリタイトル */
+.app-banner {
+  background-color: #FFDD57;
+  /* タイトルの背景色 */
+  text-align: center;
+  padding: 10px 0;
+}
+
+.app-banner h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+/* 下部の操作ボタン */
+.controls {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  position: absolute;
+  bottom: 10%;
+  /* 画面の下から20%の位置に配置 */
+  left: 0;
+  right: 0;
+  justify-content: space-between;
+  margin: 0 10px;
 }
 
-.flex-container {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
+/* タグと時間のフィールドのスタイル */
+.tags,
+.time {
+  width: 90%;
+  margin-bottom: 10px;
+  /* タグと時間の間にスペースを追加 */
 }
 
-#tag-select {
-  width: 50px;
-}
-
-.flex-container label {
-  margin-right: 8px;
-}
-
-.flex-container select,
-.flex-container input[type="text"],
-.flex-container input[type="number"] {
-  padding: 5px;
+#tag,
+#time {
+  width: 100%;
+  padding: 15px;
+  /* 余白を増やしてクリックしやすく */
+  font-size: 18px;
+  /* フォントサイズを大きく */
+  border-radius: 8px;
+  /* 角を丸く */
   border: 1px solid #ccc;
-  border-radius: 5px;
-  width: auto;
+  /* 境界線 */
 }
 
-#custom-tag {
-  display: none;
-  width: 120px;
-  margin-right: 8px;
+label {
+  font-size: 18px;
+  /* ラベルのフォントサイズも大きく */
 }
 
-#add-tag-btn {
-  display: none;
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f0f0f0;
+/* 開始ボタン */
+.start-button {
+  text-align: center;
+  margin-top: 10px;
+  /* 開始ボタンと上のフィールドとの間にスペースを追加 */
+}
+
+/* 開始ボタンのスタイル */
+#startButton {
+  padding: 10px 20px;
+  background-color: #FFDD57;
+  border: none;
+  font-size: 16px;
   cursor: pointer;
+  width: 100%;
+  /* 開始ボタンを横幅いっぱいに広げる */
 }
 
-#add-tag-btn:hover {
-  background-color: #e0e0e0;
+#startButton:hover {
+  background-color: #FFBF47;
 }
 
-#delete-tag-btn {
+.garden-container {
+  position: absolute;
+  left: 50%;
+  /* 横中央 */
+  bottom: 40%;
+  /* 下から40% */
+  transform: translateX(-50%);
+  /* 中央に配置するために50%だけ左にずらす */
+  width: 100%;
+  /* 親要素全体を使用 */
+}
+
+#flowerbed {
+  width: 90%;
+  /* 必要に応じて画像の幅を調整 */
+  height: auto;
+  /* 縦横比を保持 */
+  margin: auto;
+  /* 中央揃え */
+  display: block;
+  /* 画像がインライン要素にならないようにする */
+}
+
+/* ハンバーガーメニューのスタイル */
+.hamburger-menu {
+  position: absolute;
+  top: 10px;
+  /* 上から10px */
+  right: 10px;
+  /* 右から10px */
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 1002;
+  /* メニューより上に表示されるように */
+}
+
+/* ナビゲーションメニューのスタイル */
+.nav-menu {
   display: none;
   /* 初期状態では非表示 */
-}
-
-.start-button button {
-  padding: 10px 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
-  width: 100%;
-}
-
-#task-info {
-  margin-bottom: 20px;
-}
-
-#remaining-time {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-/* ハンバーガーメニュースタイル */
-.hamburger-menu {
-  width: 30px;
-  height: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-
-  /* 右上に配置 */
   position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 2;
-  /* メニューより前面に表示 */
-}
-
-.hamburger-menu span {
-  display: block;
-  width: 100%;
-  height: 4px;
-  background-color: #333;
-  transition: all 0.3s ease;
-}
-
-/* メニュー項目スタイル */
-.menu {
-  position: fixed;
   top: 0;
   right: 0;
+  background-color: #FFD700;
+  width: 200px;
   height: 100%;
-  width: 250px;
-  background-color: #fff;
-  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
-  transform: translateX(100%);
-  /* 画面の外に配置 */
-  transition: transform 0.3s ease;
-  /* スライドアニメーション */
-  padding: 20px;
-  list-style: none;
-  z-index: 1;
+  padding-top: 60px;
+  z-index: 1001;
+  /* メニューが他の要素の上に来るようにする */
 }
 
-.menu ul {
+.nav-menu ul {
+  list-style-type: none;
   padding: 0;
-  margin: 0;
 }
 
-.menu li {
-  margin: 15px 0;
+.nav-menu ul li {
+  margin: 20px 0;
+  text-align: center;
 }
 
-.menu a {
+.nav-menu ul li a {
   text-decoration: none;
-  color: #333;
+  color: black;
+  font-size: 20px;
 }
 
-/* メニューが開いている時のスタイル */
-.menu.open {
-  transform: translateX(0);
-  /* スライドイン */
+.nav-menu.active,
+.overlay.active {
+  display: block;
 }
 
-/* ハンバーガーメニューのアニメーション（開閉用） */
-.hamburger-menu.open span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+.nav-menu.show {
+  display: block;
+  /* メニューを表示 */
 }
 
-.hamburger-menu.open span:nth-child(2) {
-  opacity: 0;
+/* 背景オーバーレイのスタイル */
+.overlay {
+  display: none;
+  /* 初期状態では非表示 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* 半透明の黒背景 */
+  z-index: 1000;
+  /* メニューの下に表示 */
 }
 
-.hamburger-menu.open span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+.overlay.show {
+  display: block;
+  /* オーバーレイを表示 */
 }
-@media (max-width: 600px) {
-  .menu {
-    width: 50%; /* 画面いっぱいに広がる */
+
+/* スクロール無効化 */
+.no-scroll {
+  overflow: hidden;
+}
+
+/* タスクメッセージ */
+.task-message,
+.task-end-message {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.task-end-message {
+  color: green;
+  display: none;
+  /* 初めは非表示 */
+}
+
+/* タイマー画面のスタイル */
+.timer {
+  font-size: 6rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* スマホ向けのスタイル */
+@media (max-width: 768px) {
+  .hamburger-menu {
+    display: block;
+    /* スマホサイズでは表示 */
+  }
+}
+
+/* スマホ向けのスタイル */
+@media (max-width: 768px) {
+  header {
+    font-size: 20px;
+    padding: 10px;
+  }
+
+  form {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 10px;
+    font-size: 20px;
+  }
+
+  button {
+    padding: 10px;
+    font-size: 20px;
+  }
+}
+
+/* 非スマホ向け（タブレットやデスクトップ向け）スタイル */
+@media (min-width: 769px) {
+  form {
+    max-width: 500px;
+    padding: 30px;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 15px;
+    font-size: 18px;
+  }
+
+  button {
+    padding: 15px;
+    font-size: 20px;
   }
 }

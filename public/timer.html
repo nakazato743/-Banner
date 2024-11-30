@@ -5,51 +5,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>タイマー画面</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css"> <!-- 外部CSSファイルをリンク -->
 </head>
 
 <body>
-    <div class="container">
-        <h1>集中しよう!</h1>
-        <div id="task-info">
-            <p>選択したタグ: <span id="tag-name"></span></p>
-            <p>残り時間: <span id="remaining-time"></span></p>
+    <!-- 上部のアプリタイトルバナー -->
+    <header class="app-banner">
+        <h1>Banner</h1>
+    </header>
+
+    <!-- 集中メッセージ -->
+    <main>
+        <h2>集中しよう!</h2>
+
+        <!-- 花壇の画像 -->
+        <div class="garden-container">
+            <img id="flowerbed" src="dodai.png" alt="花壇">
         </div>
-        <div id="timer-display"></div>
-    </div>
+
+        <!-- タスク開始メッセージ -->
+        <div id="taskMessage" class="task-message">タスク開始！</div>
+
+        <!-- 計測中の時間 -->
+        <div class="timer" style="display: none;">
+            <span id="time">00:00:00</span>
+        </div>
+
+        <!-- タスク終了メッセージ -->
+        <div id="taskEndMessage" class="task-end-message" style="display: none;">タスク終了！</div>
+    </main>
 
     <script>
-        // URLのクエリパラメータから値を取得
-        const urlParams = new URLSearchParams(window.location.search);
-        const selectedTag = urlParams.get('tag');
-        const selectedTime = urlParams.get('time');
+        let timer;
+        let secondsRemaining;
 
-        // タグと時間を画面に表示
-        document.getElementById('tag-name').innerText = selectedTag;
-        document.getElementById('remaining-time').innerText = selectedTime + " 分";
+        // home.html から時間を取得
+        window.onload = () => {
+            const selectedTime = sessionStorage.getItem('selectedTime'); // home.html から時間を取得
 
-        // 残り時間を秒に変換
-        let remainingSeconds = selectedTime * 60;
-
-        // タイマーのカウントダウン
-        function updateTimer() {
-            const minutes = Math.floor(remainingSeconds / 60);
-            const seconds = remainingSeconds % 60;
-            document.getElementById('remaining-time').innerText = `${minutes}分 ${seconds}秒`;
-
-            if (remainingSeconds > 0) {
-                remainingSeconds--;
+            // selectedTime が正しいか確認
+            if (selectedTime) {
+                // selectedTime を整数に変換して確認
+                const timeInMinutes = parseInt(selectedTime, 10);
+                if (isNaN(timeInMinutes) || timeInMinutes <= 0) {
+                    alert('無効な時間です');
+                    return;
+                }
+                // 正しい場合は秒に変換
+                secondsRemaining = timeInMinutes * 60;
+                updateTime();  // 時間が設定されていれば即座に表示更新
             } else {
-                clearInterval(timerInterval); // タイマーを停止
-                document.getElementById('remaining-time').innerText = `0分 0秒`;
-                alert('時間が終了しました！');
-                // index.htmlに遷移
-                window.location.href = 'home.html';
+                alert('時間が設定されていません');
+                return;
             }
+
+            // タスク開始から1.5秒後に計測を開始
+            setTimeout(() => {
+                // 計測開始
+                const taskMessage = document.getElementById('taskMessage');
+                taskMessage.style.display = 'none'; // 「タスク開始！」メッセージを非表示
+
+                // タイマー部分を表示
+                document.querySelector('.timer').style.display = 'block';
+
+                // タイマー開始
+                timer = setInterval(() => {
+                    secondsRemaining--;
+                    updateTime();
+
+                    // 計測終了時
+                    if (secondsRemaining <= 0) {
+                        clearInterval(timer);
+                        document.getElementById('taskEndMessage').style.display = 'block'; // 「タスク終了！」表示
+
+                        // 1.5秒後にhome.htmlに戻る
+                        setTimeout(() => {
+                            window.location.href = '/home';  // home.htmlに遷移
+                        }, 1500); // 1.5秒後にhome.htmlに遷移
+                    }
+                }, 1000); // 1秒ごとにカウントダウン
+            }, 1500); // 1.5秒後に計測開始
+        };
+
+        // 時間をhh:mm:ssの形式で更新
+        function updateTime() {
+            const hours = Math.floor(secondsRemaining / 3600);
+            const minutes = Math.floor((secondsRemaining % 3600) / 60);
+            const sec = secondsRemaining % 60;
+
+            document.getElementById('time').textContent =
+                `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
         }
 
-        // 1秒ごとにタイマーを更新
-        const timerInterval = setInterval(updateTimer, 1000);
     </script>
 </body>
 
